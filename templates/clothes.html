@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Одежда
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <ul class="nav nav-pills justify-content-end align-items-end">
+        <li class="nav-item"><a href="jacket/"
+                                class="nav-link">Куртки</a></li>
+        <li class="nav-item"><a href="dress/"
+                                class="nav-link">Платья</a></li>
+        <li class="nav-item"><a href="trousers/"
+                                class="nav-link">Брюки</a></li>
+        _________<br>
+        <a href={{level}} class="nav-link">Вернуться</a>
+    </ul>
+</div>
+{% endblock %}
