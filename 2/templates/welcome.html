@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block content %}
+<form action="/welcome/" method="post">
+    <p>
+        {{message}}
+    </p>
+    <p>
+        <button class="form_auth_button" type="submit" name="form_auth_submit">Выйти</button>
+    </p>
+</form>
+{% endblock %}
