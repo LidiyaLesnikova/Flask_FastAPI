@@ -13,6 +13,7 @@ def autorization():
     if request.method == 'POST':
         response = make_response(redirect(url_for('welcome')))
         response.set_cookie('username', request.form['name'])
+        response.set_cookie('useremail', request.form['email'])
         return response
     return render_template("base.html")
 
@@ -28,6 +29,7 @@ def welcome():
 def logout():
     res = make_response(redirect(url_for('base')))
     res.set_cookie("username", "", 0)
+    res.set_cookie("useremail", "", 0)
     return res
 
 if __name__ == '__main__':
