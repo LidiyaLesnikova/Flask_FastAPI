@@ -12,7 +12,7 @@ API должен содержать следующие конечные точк
 Для этого использовать библиотеку Pydantic.
 '''
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import uvicorn
 
 from Tasks import Task
@@ -35,7 +35,7 @@ async def return_task(id: int):
         select_task = select[0]
         return {"id": id, "task": select_task}
     else:
-        return f"нет Задания с id {id}"
+        raise HTTPException(status_code=404, detail=f'Task {id} not found')
 
 @app.post("/tasks/")
 async def create_task(task: Task):
@@ -52,7 +52,7 @@ async def update_task(id: int, task: Task):
         tasks[index] = current_task
         return current_task
     else:
-        return f"нет Задания с id {id}"
+        raise HTTPException(status_code=404, detail=f'Task {id} not found')
 
 
 @app.delete("/tasks/{id}")
@@ -63,7 +63,7 @@ async def delete_task(id: int):
         tasks.pop(index)
         return f"Задание с id {id} удалено"
     else:
-        return f"нет Задания с id {id}"
+        raise HTTPException(status_code=404, detail=f'Task {id} not found')
 
 if __name__ == "__main__":
     uvicorn.run(
