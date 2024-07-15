@@ -31,6 +31,39 @@ id (PRIMARY KEY), название, описание и цена.
 магазина.
 '''
 
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+import starlette.status as status
+import uvicorn
+
+from db import database
+from routers.user import router_user
+from routers.product import router_product
+from routers.order import router_order
+
+app = FastAPI()
+
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
+
+@app.get("/")
+async def start():
+    return RedirectResponse(url="/docs/", status_code=status.HTTP_302_FOUND)
+
+app.include_router(router_user, prefix="/usr")
+app.include_router(router_product, prefix="/prod")
+app.include_router(router_order, prefix="/ordr")
 
 if __name__ == "__main__":
-    pass
+    uvicorn.run(
+        'task6:app',
+        host='127.0.0.1',
+        port=8000,
+        reload=True
+    )
+
